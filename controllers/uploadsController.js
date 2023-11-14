@@ -1,9 +1,22 @@
-const Product = require('../models/Product')
-const {StatusCodes} = require('http-status-codes')
+const Product = require("../models/Product");
+const path = require("path");
+const { StatusCodes } = require("http-status-codes");
 
-const uploadProductImage = async (req,res)=>{
-    res.send('upload product image')
-}
+const uploadProductImage = async (req, res) => {
 
+  const productImage = req.files.image;
 
-module.exports = {uploadProductImage}
+  const imagePath = path.join(
+    __dirname,
+    "../public/uploads/" + `${productImage.name}`
+  );
+  console.log(imagePath);
+
+  await productImage.mv(imagePath);
+
+  return res
+    .status(StatusCodes.OK)
+    .json({ image: { src: `/uploads/${productImage.name}` } });
+};
+
+module.exports = { uploadProductImage };
