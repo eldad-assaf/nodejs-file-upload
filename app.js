@@ -15,6 +15,8 @@ const productRouter = require("./routes/productRoutes");
 // error handler
 const notFoundMiddleware = require('./middleware/not-found');
 const errorHandlerMiddleware = require('./middleware/error-handler');
+
+//makes the folder publicly available
 app.use(express.static('./public'))
 app.use(express.json())
 app.use(fileUpload());
